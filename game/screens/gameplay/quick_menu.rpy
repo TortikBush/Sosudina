@@ -1,0 +1,71 @@
+################################################################################
+## Экран быстрого меню
+################################################################################
+
+
+
+init python:
+    def safe_rollback():
+        if renpy.can_rollback():
+            renpy.rollback()
+
+screen quick_menu():
+    zorder 100
+
+    default menu_items = [
+        ("Главное меню", ShowMenu('main_menu'), None),
+        ("История", ShowMenu('history'), None),
+        ("Пропуск", Skip(), Skip(fast=True, confirm=True)),
+        ("Сохранения", ShowMenu('save'), None),
+        ("Настройки", ShowMenu('preferences'), None),
+        ("Помощь", ShowMenu('help'), None),
+    ]
+   
+    imagebutton:
+        align (0.0, 0.0)
+        xoffset 40
+        yoffset 50
+        idle "images/arrow.png"
+        hover "images/arrow.png" 
+        action Function(safe_rollback)
+
+    if not quick_menu_open:
+        textbutton "☰" action SetVariable("quick_menu_open", True):
+            align (1.0, 0.0)
+            xoffset -120
+            yoffset 50
+            style "quick_button"
+            xysize (120, 100)
+            text_size 100
+
+    if quick_menu_open:
+        frame:
+            background Solid("#0a1a1b")
+            padding (15, 10)
+            xalign 1.0
+            yalign 0.0
+            xoffset -50
+            yoffset 100
+            xmaximum 10000
+            ymaximum 1000 
+            vbox:
+                spacing 8
+                for item_label, item_action, item_alt in menu_items:
+                    if item_alt:
+                        textbutton _(item_label):
+                            action item_action
+                            alternate item_alt
+                            text_size 55
+                    else:
+                        textbutton _(item_label):
+                            action item_action
+                            text_size 55
+                null height 10
+                textbutton "Закрыть":
+                    action SetVariable("quick_menu_open", False)
+                    xalign 0.5
+                    text_size 60
+
+init python:
+    config.overlay_screens.append("quick_menu")
+

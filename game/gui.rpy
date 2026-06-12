@@ -91,24 +91,25 @@ define gui.title_text_size = 150
 
 ## Изображения, используемые в главном и игровом меню.
 define gui.main_menu_background = "gui/main_menu.png"
+
 # Создаем переменную для хранения скриншота
 define gui.game_menu_background = None
 
-# Функция для захвата текущего экрана
-init python:
-    def capture_game_menu_background():
-        renpy.take_screenshot()
-        gui.game_menu_background = renpy.get_screenshot()
-        return True
+# # Функция для захвата текущего экрана
+# init python:
+#     def capture_game_menu_background():
+#         renpy.take_screenshot()
+#         gui.game_menu_background = renpy.get_screenshot()
+#         return True
 
-# Используем это при вызове меню
-screen game_menu():
-    # Захватываем фон при первом показе меню
-    on "show" action Function(capture_game_menu_background)
+# # Используем это при вызове меню
+# screen game_menu():
+#     # Захватываем фон при первом показе меню
+#     on "show" action Function(capture_game_menu_background)
     
-    # Используем захваченный скриншот как фон
-    if gui.game_menu_background:
-        add gui.game_menu_background
+#     # Используем захваченный скриншот как фон
+#     if gui.game_menu_background:
+#         add gui.game_menu_background
     
 
 
