@@ -17,7 +17,7 @@ screen file_slots(title, mode="save"):
     
     $ total_pages = 1
     if renpy.get_screen("save") or renpy.get_screen("load"):
-        for page in range(1, 100):
+        for page in range(1, 10):
             $ page_has_saves = False
             for slot in range(1, gui.file_slot_cols * gui.file_slot_rows + 1):
                 if FileLoadable(slot, page=page):
@@ -144,7 +144,7 @@ screen file_slots(title, mode="save"):
                                     action FileAction(slot)
                                     style "save_under_button"
                                     text_style "save_under_text"
-
+  
             vbox:
                 style_prefix "page"
                 xalign 0.5
@@ -158,24 +158,52 @@ screen file_slots(title, mode="save"):
                     key "save_page_prev" action FilePagePrevious()
 
                     if config.has_autosave:
-                        textbutton _("{#auto_page}А") action FilePage("auto")
+                        textbutton _("Авто") action FilePage("auto")
 
-                    for page_info in chapters:
-                        $ page_num = page_info['number']
-                        $ is_current = FileCurrentPage() == page_num
+                    # Определяем, сколько слотов на странице
+                    $ total_slots = gui.file_slot_cols * gui.file_slot_rows
+                    $ current_page = FileCurrentPage()
+                    
+                    # Проверяем, полностью ли заполнена ТЕКУЩАЯ страница
+                    $ current_page_full = True
+                    python:
+                        for slot in range(1, total_slots + 1):
+                            if not FileLoadable(slot, page=current_page):
+                                current_page_full = False
+                                break
+                    
+                    # Показываем кнопки страниц (только реально существующие)
+                    $ max_page = 1
+                    python:
+                        # Находим последнюю страницу с сохранениями
+                        for page in range(1, 20):
+                            page_has_saves = False
+                            for slot in range(1, total_slots + 1):
+                                if FileLoadable(slot, page=page):
+                                    page_has_saves = True
+                                    break
+                            if page_has_saves:
+                                max_page = page
+                            else:
+                                break
                         
-                        if is_current:
-                            textbutton "[page_num]":
-                                action FilePage(page_num)
-                                style "page_num_current_button"
-                                tooltip page_info['name']
+                        # Если страница полная, добавляем следующую пустую
+                        if current_page_full and max_page == current_page:
+                            max_page = max_page + 1
+                    
+                    # Показываем страницы
+                    for page_num in range(1, max_page + 1):
+                        if page_num == current_page:
+                            textbutton "[page_num]" action FilePage(page_num) style "page_num_current_button"
                         else:
-                            textbutton "[page_num]":
-                                action FilePage(page_num)
-                                style "page_num_button"
-                                tooltip page_info['name']
+                            textbutton "[page_num]" action FilePage(page_num) style "page_num_button"
 
-                    textbutton _(">") action FilePageNext()
+                    # КНОПКА ">" - активна ТОЛЬКО если текущая страница ПОЛНОСТЬЮ ЗАПОЛНЕНА
+                    if current_page_full:
+                        textbutton _(">") action FilePageNext()
+                    else:
+                        textbutton _(">") action None sensitive False
+                        
                     key "save_page_next" action FilePageNext()
 
                 if config.has_sync:

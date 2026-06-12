@@ -20,7 +20,7 @@ screen chapter_save():
                 hbox:
                     spacing 25
                     
-                    for chapter_id, chapter in chapter_progress.items():
+                    for chapter_id, chapter in persistent.chapter_progress.items():
                         $ chapter_num = chapter_id.split("_")[1]
                         
                         frame:
