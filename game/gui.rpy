@@ -504,3 +504,30 @@ init python:
 
         gui.nvl_button_width = 3720
         gui.nvl_button_xpos = 60
+
+style window:
+    xalign 0.5
+    xfill True
+    yalign gui.textbox_yalign
+    ysize gui.textbox_height
+    
+
+style left_window is window:
+    xalign 0.0
+    xpos 1450
+    xsize 800
+    yalign 1.0
+    ysize gui.textbox_height
+  
+
+style right_window is window:
+    xalign 1.0
+    xpos 250
+    xsize 800
+    yalign 1.0
+    ysize gui.textbox_height
+
+style left_namebox is namebox:
+    xalign 1.0
+    xpos 1700
+    ypos 50

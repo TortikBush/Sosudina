@@ -13,7 +13,7 @@ screen quick_menu():
     zorder 100
 
     default menu_items = [
-        ("Главное меню", ShowMenu('main_menu'), None),
+        ("Главное меню", [Function(renpy.save, "autosave"),MainMenu()], None),
         ("История", ShowMenu('history'), None),
         ("Пропуск", Skip(), Skip(fast=True, confirm=True)),
         ("Сохранения", ShowMenu('save'), None),

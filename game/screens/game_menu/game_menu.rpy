@@ -52,6 +52,10 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
     textbutton _("Вернуться"):
         style "return_button"
-        action Return()
+        action If(
+            main_menu,  # Если мы в главном меню
+            ShowMenu("main_menu"),  # Остаёмся в главном меню (ничего не делаем)
+            Return()  # Иначе возвращаемся в игру
+        )
 
     label title

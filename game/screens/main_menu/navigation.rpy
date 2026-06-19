@@ -42,6 +42,7 @@ init python:
             "offset": 0,
             "arrow": False
         },
+
         "История": {"offset": 600},
         "Аккаунт": {"offset": 615},
         "Настройки": {"offset": 515},
