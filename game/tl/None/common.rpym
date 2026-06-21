@@ -515,7 +515,7 @@ translate None strings:
 
     # renpy/common/00gui.rpy:453
     old "Are you sure you want to return to the main menu?\nThis will lose unsaved progress."
-    new "Вы уверены, что хотите вернуться в главное меню?\nЭто приведёт к потере несохранённого прогресса."
+    new "Вы уверены, что хотите вернуться в главное меню?\nВаш прогресс будет автоматически сохранён."
 
     # renpy/common/00gui.rpy:454
     old "Are you sure you want to continue where you left off?"

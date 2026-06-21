@@ -1,3 +1,5 @@
+
+
 # Персонажи
 define p = Character("Пифон", color="#c8c8ff", window_style = "right_window")
 define L = Character("Ламия", color="#ff635e", window_style = "left_window",namebox_style="left_namebox")
@@ -10,6 +12,7 @@ image lami = "lami_taro.png"
 image exi = "exi_taro.png"
 image pifi = "pifon_taro.png"
 image Lami_def = "Lami_def.png"
+
 
 # Начало игры
 label start:

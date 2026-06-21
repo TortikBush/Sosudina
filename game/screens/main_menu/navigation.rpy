@@ -42,7 +42,12 @@ init python:
             "offset": 0,
             "arrow": False
         },
-
+        "Продолжить": {  # ← ДОБАВИТЬ
+            "size": 135,
+            "font": "fronts/Neothic.ttf",
+            "offset": 0,
+            "arrow": False
+        },
         "История": {"offset": 600},
         "Аккаунт": {"offset": 615},
         "Настройки": {"offset": 515},
@@ -69,20 +74,51 @@ screen navigation():
         xpos 2200
         ypos 1000
         zoom 0.7 
+
+
+    textbutton "Продолжить":
+        xpos 2300
+        ypos 870
+        text_size 135
+        text_font "fronts/Neothic.ttf"
+        action FileLoad(1, page="auto", confirm=False)
+        hovered SetVariable("hovered_button", "Продолжить")
+        unhovered SetVariable("hovered_button", None)
+        sensitive True
+    # textbutton "Продолжить":
+    #     xpos 2300
+    #     ypos 870
+    #     text_size 135
+    #     text_font "fronts/Neothic.ttf"
+    #     action If(
+    #         renpy.can_load("autosave"),
+    #         FileLoad("autosave", confirm=False),
+    #         None
+    #     )
+    #     hovered SetVariable("hovered_button", "Продолжить")
+    #     unhovered SetVariable("hovered_button", None)
+    #     # sensitive renpy.can_load("autosave")
+    #     sensitive True
+    # else:
+    #     textbutton "Продолжить":
+    #         xpos 2300
+    #         ypos 870
+    #         text_size 135
+    #         text_font "fronts/Neothic.ttf"
+    #         action None
+    #         sensitive False
+    #         text_color "#666666"
     
     textbutton "Начать игру":
         xpos 2300
         ypos 1100
         text_size nav_config["Начать игру"]["size"]
-
         if nav_config["Начать игру"]["font"]:
             text_font nav_config["Начать игру"]["font"]
-
-        action [SetVariable("hovered_button", None), ShowMenu("character_select")]
-
+        action ShowMenu("character_select")
         hovered SetVariable("hovered_button", "Начать игру")
         unhovered SetVariable("hovered_button", None)
-    
+        
     vbox:
         style_prefix "navigation"
         xpos 3250
@@ -110,6 +146,37 @@ screen navigation():
                 if cfg.get("arrow", True):
                     hovered SetVariable("hovered_button", name)
                     unhovered SetVariable("hovered_button", None)
+            # $ base = nav_config["default"]
+            # $ custom = nav_config.get(name, {})
+            # $ cfg = dict(base, **custom)
+
+            # if name == "Выход":
+            #     $ btn_action = Quit(confirm=False)
+            # elif name == "Продолжить":
+            #     if renpy.can_load("autosave-LT1"):
+            #         $ btn_action = FileLoad("autosave-LT1",confirm=False)
+            #     else:
+            #         $ btn_action = None
+            # else:
+            #     $ btn_action = [SetVariable("hovered_button", None), ShowMenu(action_name)]
+
+            # # if name == "Продолжить" and not renpy.can_load("autosave-LT1"):
+            # #     textbutton _(name):
+            # #         action None
+            # #         sensitive False
+            # #         text_size cfg["size"]
+            # #         if cfg["font"]:
+            # #             text_font cfg["font"]
+            # #         text_color "#666666"
+            # # else:
+            #     textbutton _(name):
+            #         action btn_action
+            #         text_size cfg["size"]
+            #         if cfg["font"]:
+            #             text_font cfg["font"]
+            #         if cfg.get("arrow", True):
+            #             hovered SetVariable("hovered_button", name)
+            #             unhovered SetVariable("hovered_button", None)
 
     if hovered_button:
         use arrow_screen(button_name=hovered_button)

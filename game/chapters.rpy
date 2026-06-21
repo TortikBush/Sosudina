@@ -1,3 +1,5 @@
+label chapters_start:
+    return
 # game/chapters.rpy
 default persistent.chapter_progress = {
     "chapter_1": {"unlocked": True, "completed": False, "name": "Анте приносит пойманный дух"},
@@ -18,3 +20,4 @@ init python:
             next_chapter = f"chapter_{chapter_num + 1}"
             if next_chapter in persistent.chapter_progress:
                 persistent.chapter_progress[next_chapter]["unlocked"] = True
+
