@@ -4,8 +4,38 @@
 
 # game/screens/main_menu/navigation.rpy
 
+# game/chapters.rpy
+
+# game/chapters.rpy
 
 
+# init python:
+
+#     def clear_all():
+
+#         for save in renpy.list_saved_games():
+#             renpy.unlink_save(save[0])
+
+#         persistent._clear()
+#         renpy.save_persistent()
+init python:
+
+    if persistent.can_continue is None:
+        persistent.can_continue = False
+
+    def clear_all():
+
+        for slot, *_ in renpy.list_saved_games():
+            renpy.unlink_save(slot)
+
+        persistent.can_continue = False
+
+init python:
+
+    def start_new_game():
+        clear_all()
+        store.hovered_button = None
+        renpy.show_screen("character_select")
 
 default hovered_button = None
 
@@ -25,7 +55,7 @@ default character_select = None
 
 
 default nav_buttons = [
-    ("История", "history"),
+    ("Сохранения", "save_menu"),
     ("Перейти к", "chapter_save"), 
     ("Аккаунт", "save_menu"),  
     ("Настройки", "preferences"),
@@ -48,7 +78,7 @@ init python:
             "offset": 0,
             "arrow": False
         },
-        "История": {"offset": 600},
+        "Сохранения": {"offset": 600},
         "Аккаунт": {"offset": 615},
         "Настройки": {"offset": 515},
         "Помощь": {"offset": 610},
@@ -81,44 +111,33 @@ screen navigation():
         ypos 870
         text_size 135
         text_font "fronts/Neothic.ttf"
+
         action FileLoad(1, page="auto", confirm=False)
+
+        sensitive persistent.can_continue
+
         hovered SetVariable("hovered_button", "Продолжить")
         unhovered SetVariable("hovered_button", None)
-        sensitive True
-    # textbutton "Продолжить":
-    #     xpos 2300
-    #     ypos 870
-    #     text_size 135
-    #     text_font "fronts/Neothic.ttf"
-    #     action If(
-    #         renpy.can_load("autosave"),
-    #         FileLoad("autosave", confirm=False),
-    #         None
-    #     )
-    #     hovered SetVariable("hovered_button", "Продолжить")
-    #     unhovered SetVariable("hovered_button", None)
-    #     # sensitive renpy.can_load("autosave")
-    #     sensitive True
-    # else:
-    #     textbutton "Продолжить":
-    #         xpos 2300
-    #         ypos 870
-    #         text_size 135
-    #         text_font "fronts/Neothic.ttf"
-    #         action None
-    #         sensitive False
-    #         text_color "#666666"
+  
     
     textbutton "Начать игру":
         xpos 2300
         ypos 1100
         text_size nav_config["Начать игру"]["size"]
+
         if nav_config["Начать игру"]["font"]:
             text_font nav_config["Начать игру"]["font"]
-        action ShowMenu("character_select")
+
+            action Confirm(
+            "Вы точно хотите начать игру заново?",
+                Function(start_new_game),
+                # SetVariable("hovered_button", None),
+                # ShowMenu("character_select")
+        )
+
         hovered SetVariable("hovered_button", "Начать игру")
         unhovered SetVariable("hovered_button", None)
-        
+
     vbox:
         style_prefix "navigation"
         xpos 3250
@@ -182,7 +201,7 @@ screen navigation():
         use arrow_screen(button_name=hovered_button)
 
 screen arrow_screen(button_name=""):
-    $ names = ["История", "Аккаунт", "Настройки", "Помощь", "Об игре","Выход"]
+    $ names = ["Сохранения", "Аккаунт", "Настройки", "Помощь", "Об игре","Выход"]
 
     if button_name in names:
         $ index = names.index(button_name)

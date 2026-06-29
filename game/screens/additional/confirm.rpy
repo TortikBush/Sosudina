@@ -22,7 +22,11 @@ screen confirm(message, yes_action, no_action):
                 xalign 0.5
                 spacing 300
 
-                textbutton _("Да") action yes_action
-                textbutton _("Нет") action no_action
+                textbutton _("Да"):
+                    action yes_action 
+                    default True
+                    keyboard_focus True
+                textbutton _("Нет"):
+                    action no_action
 
     key "game_menu" action no_action

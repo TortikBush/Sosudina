@@ -42,7 +42,11 @@ screen pifon_stats():
             imagebutton:
                 idle "images/knopka_vybrat.png"
                 xalign 0.5
-                action Start()
+                action [
+                    SetField(persistent, "can_continue", True),
+                    Start()
+                ]
+                # action Start()
 
     if renpy.get_screen("pifon_stats"):
         add "images/light.png" at transform:

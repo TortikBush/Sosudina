@@ -6,8 +6,11 @@ init python:
     config.character_id_prefixes.append('namebox')
 
 screen say(who, what):
+    key "mouseup_1" action SetVariable("quick_menu_open", False)
     window:
         id "window"
+
+        
         if who is not None:
             window:
                 id "namebox"
