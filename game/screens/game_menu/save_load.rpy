@@ -6,9 +6,9 @@ screen save_menu():
     tag menu
     use file_slots(_("Сохранения"))
 
-# screen save():
-#     tag menu
-#     use file_slots(_("Сохранения"))
+screen save():
+    tag menu
+    use file_slots(_("Сохранения"))
 
 screen file_slots(title, mode="save"):
     default page_name_value = FilePageNameInputValue(pattern=_("{} страница"), auto=_("Автосохранения"))

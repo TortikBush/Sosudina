@@ -30,6 +30,67 @@ init python:
 
         persistent.can_continue = False
 
+
+
+ 
+
+
+
+    # def continue_game():
+
+    #     # 1. автосейв
+    #     try:
+    #         if renpy.can_load("1", page="auto"):
+    #             renpy.load("1", page="auto")
+    #             return
+    #     except:
+    #         pass
+
+    #     # 2. обычные сейвы
+    #     saves = renpy.list_saved_games()
+
+    #     for s in saves:
+    #         slot = s[0]
+
+    #         try:
+    #             renpy.load(slot)
+    #             return
+    #         except:
+    #             continue
+
+    #     renpy.notify("Нет сохранений")
+    
+    def has_any_save():
+
+       
+        # Есть ли автосейвы?
+        if renpy.list_slots(r"^auto-\d+$"):
+            return True
+
+        # Есть ли обычные сейвы?
+        if renpy.list_slots(r"^\d+-\d+$"):
+            return True
+
+        return False
+
+    def continue_game():
+
+        # Сначала самый новый автосейв
+        slot = renpy.newest_slot(r"^auto-\d+$")
+
+        if slot:
+            renpy.load(slot)
+            return
+
+        # Потом самый новый обычный сейв
+        slot = renpy.newest_slot(r"^\d+-\d+$")
+
+        if slot:
+            renpy.load(slot)
+            return
+
+        renpy.notify("Нет сохранений")
+
 init python:
 
     def start_new_game():
@@ -42,7 +103,9 @@ default hovered_button = None
 # Быстрое меню (quick_menu.rpy)
 default quick_menu_open = False
 default quick_menu = True
-
+# init python:
+#     if persistent.quick_menu_open is None:
+#         persistent.quick_menu_open = False
 # Настройки (preferences.rpy)
 default pref_tab = "screen"
 
@@ -72,7 +135,7 @@ init python:
             "offset": 0,
             "arrow": False
         },
-        "Продолжить": {  # ← ДОБАВИТЬ
+        "Продолжить": {  
             "size": 135,
             "font": "fronts/Neothic.ttf",
             "offset": 0,
@@ -106,19 +169,34 @@ screen navigation():
         zoom 0.7 
 
 
+    # textbutton "Продолжить":
+    #     xpos 2300
+    #     ypos 870
+    #     text_size 135
+    #     text_font "fronts/Neothic.ttf"
+
+    #     # action FileLoad(1, page="auto", confirm=False)
+    #     action Function(continue_game)
+
+    #     sensitive persistent.can_continue
+
+    #     hovered SetVariable("hovered_button", "Продолжить")
+    #     unhovered SetVariable("hovered_button", None)
+
     textbutton "Продолжить":
         xpos 2300
         ypos 870
         text_size 135
         text_font "fronts/Neothic.ttf"
 
-        action FileLoad(1, page="auto", confirm=False)
+        action Function(continue_game)
 
-        sensitive persistent.can_continue
+        sensitive has_any_save()
 
         hovered SetVariable("hovered_button", "Продолжить")
         unhovered SetVariable("hovered_button", None)
-  
+            
+    
     
     textbutton "Начать игру":
         xpos 2300
