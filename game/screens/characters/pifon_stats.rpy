@@ -85,6 +85,7 @@ screen pifon_stats():
     imagebutton:
         idle "boby.png"
         hover "boby01.png"
+       
         pos (1104, 1080)
         anchor (0.5, 0.5)
         focus_mask True 

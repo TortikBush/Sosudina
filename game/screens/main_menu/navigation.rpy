@@ -103,10 +103,7 @@ default hovered_button = None
 # Быстрое меню (quick_menu.rpy)
 default quick_menu_open = False
 default quick_menu = True
-# init python:
-#     if persistent.quick_menu_open is None:
-#         persistent.quick_menu_open = False
-# Настройки (preferences.rpy)
+
 default pref_tab = "screen"
 
 # Выбор персонажа (character_select.rpy)
@@ -120,7 +117,7 @@ default character_select = None
 default nav_buttons = [
     ("Сохранения", "save_menu"),
     ("Перейти к", "chapter_save"), 
-    ("Аккаунт", "save_menu"),  
+    ("Аккаунт", "account"),  
     ("Настройки", "preferences"),
     ("Помощь", "help"),
     ("Об игре", "about"),
