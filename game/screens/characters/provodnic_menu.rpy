@@ -2,43 +2,39 @@
 # Меню Проводника
 ###################################################################
 
-screen provodnic_menu():
+screen provodnic_menu(origin="default"):
     modal True
     add "images/Bg_choise.png"
+    
+    $ p = menu_params["provodnic"].get(origin, menu_params["provodnic"]["default"])
 
-    add "images/light.png" at transform:
-        pos (690, 0.949)
+    add p["light"] at transform:
+        pos p["light_pos"]
         anchor (0, 1.0)
-        zoom 0.7
+        zoom p["light_zoom"]
         xzoom 0.9
         yzoom 0.9
         alpha 0.0
         pause 0.1
         linear 1.0 alpha 4
 
-    add "images/static_activ.png" at transform:
-        pos (1100, 1091)  
+    add p["static_activ"] at transform:
+        pos p["static_pos"]
         anchor (0.5, 0.5)
-        zoom 0.485
+        zoom p["static_zoom"]
 
-    add "images/static.png" at transform:
-        pos (1104, 1091)  
+    add p["static"] at transform:
+        pos p["static_pos"]
         anchor (0.5, 0.5)
-        zoom 0.485
+        zoom p["static_zoom"]
         alpha 1
         linear 1 alpha 0
 
-    add "images/provodnic02.png" at transform:
-        pos (1101, 700)  
+    add p["image"] at transform:
+        pos p["pos"]
         anchor (0.5, 0.5)
-        zoom 0.5
+        zoom p.get("image_zoom", 0.5)
 
-    frame:
-        xalign 0.5  
-        xoffset 800  
-        yalign 0.1
-        background None
-        
     use info_layout(
         "ПРОВОДНИК",
         "Проводник – это наш внутренний наставник...",

@@ -31,8 +31,9 @@ screen account():
             anchor (0.5, 0.5)
             at transform:
                 zoom 0.495
-            action Show("account_ten_menu")
+            action Show("ten_menu", origin="account")
             focus_mask True
+            
         
         add "images/static_activ_account.png" at transform:
             pos (1300, 1221)  
@@ -57,8 +58,7 @@ screen account():
             anchor (0.5, 0.5)
             at transform:
                 zoom 0.495
-                
-            action Show("account_boby_menu")
+            action Show("boby_menu", origin="account")
             
             focus_mask True
         
@@ -69,7 +69,7 @@ screen account():
             anchor (0.5, 0.5)
             at transform:
                 zoom 1.9
-            action Show("account_dyx_menu")
+            action Show("dyx_menu", origin="account")
             focus_mask True
         
         imagebutton:
@@ -79,7 +79,7 @@ screen account():
             anchor (0.5, 0.5)
             at transform:
                 zoom 1.6
-            action Show("account_provodnic_menu")
+            action Show("provodnic_menu", origin="account")
             focus_mask True
 
         textbutton "Выйти из аккаунта":

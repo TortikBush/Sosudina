@@ -2,21 +2,23 @@
 # Меню Тела
 ###################################################################
 
-screen boby_menu():
+screen boby_menu(origin="default"):
     modal True
     add "images/Bg_choise.png"
+    
+    $ p = menu_params["boby"].get(origin, menu_params["boby"]["default"])
 
-    add "images/boby02.png" at transform:
-        pos (1104, 1091)  
+    add p["image"] at transform:
+        pos p["pos"]
         anchor (0.5, 0.5)
-        zoom 0.485
+        zoom p.get("image_zoom", 0.5)
         alpha 1
         linear 0 alpha 1
 
-    add "images/static.png" at transform:
-        pos (1104, 1091)  
+    add p["static"] at transform:
+        pos p["static_pos"]
         anchor (0.5, 0.5)
-        zoom 0.485
+        zoom p["static_zoom"]
         alpha 1
         linear 1 alpha 0
 
