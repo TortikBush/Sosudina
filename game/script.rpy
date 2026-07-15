@@ -16,6 +16,10 @@ image Lami_def = "Lami_def.png"
 
 # Начало игры
 label start:
+    python:
+        if not persistent.first_launch_date:
+            persistent.first_launch_date = renpy.time.strftime("%d.%m.%Y %H:%M")
+            renpy.save_persistent()
 
     scene livingroom
     

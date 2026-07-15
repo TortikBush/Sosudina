@@ -1,8 +1,9 @@
-# game/screens/game_menu/chapter_save.rpy
 
 screen chapter_save():
     tag menu
-    
+
+ 
+
     use game_menu(_("ПЕРЕЙТИ К")):
         
         fixed:
@@ -84,3 +85,4 @@ screen chapter_save():
                 thumb "#ffffff"
             
             text "→  листайте вправо/влево  ←" size 18 color "#888888" xalign 0.5 ypos 720
+            # game/persistent_data.rpy

@@ -1,7 +1,7 @@
 ################################################################################
 ## Экран аккаунта
 ################################################################################
-
+default name_edit_account = False
 screen account():
     tag menu
     add "images/account_bg.png"
@@ -81,7 +81,91 @@ screen account():
                 zoom 1.6
             action Show("provodnic_menu", origin="account")
             focus_mask True
+                
+         
+        vbox:
+            xpos 3200
+            ypos 650
+            spacing 30
+            
+            
+            
+            text "Первый запуск:" size 40 color "#ffd700"
+            text get_first_launch_date() size 40 color "#aaaaaa"
+            
+            null height 100
+
+        vbox:
+            xpos 2700
+            ypos 350
+            spacing 30
+
+            text "ID аккаунта:":
+                size 40
+                color "#ffd700"
+
+            text persistent.account_id:
+                size 40
+                color "#aaaaaa"
+        
+        fixed:
+            xpos 2400
+            ypos 150
+
+            frame:
+                background None
+                xsize 700
+                ysize 90
+
+
+            if name_edit_account:
+
+                input:
+                    xpos 20
+                    ypos 20
+                    value FieldInputValue(persistent, "player_name")
+                    length 20
+                    pixel_width 500
+                    size 40
+                    color "#ffffff"
+
+
+                textbutton "Готово":
+                    xpos 560
+                    ypos 10
+                    text_size 35
+                    action [
+                        SetVariable("name_edit_account", False),
+                        Function(renpy.save_persistent)
+                    ]
+
+
+            else:
+
+                if persistent.player_name == "":
+                    text "Имя игрока":
+                        xpos 20
+                        ypos 20
+                        size 40
+                        color "#888888"
+
+                else:
+                    text persistent.player_name:
+                        xpos 20
+                        ypos 20
+                        size 40
+                        color "#ffffff"
+
+
+                textbutton "Изменить":
+                    xpos 560
+                    ypos 10
+                    text_size 35
+                    action SetVariable("name_edit_account", True)
+            
 
         textbutton "Выйти из аккаунта":
             text_size 40
             action Return()
+        
+            
