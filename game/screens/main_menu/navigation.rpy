@@ -134,7 +134,7 @@ init python:
         },
         "Продолжить": {  
             "size": 135,
-            "font": "fronts/Neothic.ttf",
+            
             "offset": 0,
             "arrow": False
         },

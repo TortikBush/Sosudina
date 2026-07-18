@@ -2,6 +2,29 @@
 ## Экран аккаунта
 ################################################################################
 default name_edit_account = False
+default player_name_input = ""
+
+
+transform blink_cursor:
+
+    alpha 1.0
+    pause 0.5
+
+    alpha 0.0
+    pause 0.5
+
+    repeat
+
+init python:
+
+    def get_player_name_width():
+
+        if not persistent.player_name:
+            return 0
+
+        return len(persistent.player_name) * 40 + 15
+
+
 screen account():
     tag menu
     add "images/account_bg.png"
@@ -85,32 +108,43 @@ screen account():
          
         vbox:
             xpos 3200
-            ypos 650
+            ypos 895
             spacing 30
             
             
             
-            text "Первый запуск:" size 40 color "#ffd700"
+        #   дата и время
             text get_first_launch_date() size 40 color "#aaaaaa"
             
             null height 100
 
         vbox:
             xpos 2700
-            ypos 350
+            ypos 415
             spacing 30
-
-            text "ID аккаунта:":
-                size 40
-                color "#ffd700"
-
+            # id
             text persistent.account_id:
                 size 40
+                # color"#ffd700"
                 color "#aaaaaa"
+
+            
+            
+            
+        #   дата и время
+        text "0/4":
+                xpos 3100
+                ypos 1495
+               
+                size 130
+                font "fronts/NEOTHIC1.ttf"
+                color "#c94848"
+            
+        
         
         fixed:
-            xpos 2400
-            ypos 150
+            xpos 2600
+            ypos 90
 
             frame:
                 background None
@@ -121,48 +155,83 @@ screen account():
             if name_edit_account:
 
                 input:
-                    xpos 20
-                    ypos 20
+                    xpos -2000
+                    ypos -2000
                     value FieldInputValue(persistent, "player_name")
                     length 20
-                    pixel_width 500
-                    size 40
-                    color "#ffffff"
 
+
+                text persistent.player_name:
+                    xpos 350
+                    ypos 1
+                    xanchor 0.5
+
+                    font "fronts/Neothic.ttf"
+                    size 120
+                    color "#f8dd83"
+
+
+
+
+                text "│":
+                    xpos 350 + get_player_name_width() 
+                    ypos 1
+                   
+                    font "DejaVuSans.ttf"
+                    size 90
+                    color "#f8dd83"
+
+                    at blink_cursor   
 
                 textbutton "Готово":
-                    xpos 560
-                    ypos 10
-                    text_size 35
+                    xoffset 290
+                    yoffset 150
+                    text_size 50
+
                     action [
                         SetVariable("name_edit_account", False),
                         Function(renpy.save_persistent)
                     ]
 
-
             else:
 
+
                 if persistent.player_name == "":
+
                     text "Имя игрока":
-                        xpos 20
-                        ypos 20
-                        size 40
+
+                        xpos 350
+                        ypos 1
+                        xanchor 0.5
+
+                        font "fronts/Neothic.ttf"
+                        size 120
                         color "#888888"
 
+
                 else:
+
                     text persistent.player_name:
-                        xpos 20
-                        ypos 20
-                        size 40
-                        color "#ffffff"
+
+                        xpos 350
+                        ypos 1
+                        xanchor 0.5
+
+                        font "fronts/Neothic.ttf"
+                        size 120
+                        color "#f8dd83"
+
 
 
                 textbutton "Изменить":
-                    xpos 560
-                    ypos 10
-                    text_size 35
+
+                    xoffset 230
+                    yoffset 150
+
+                    text_size 50
+
                     action SetVariable("name_edit_account", True)
-            
+   
 
         textbutton "Выйти из аккаунта":
             text_size 40
