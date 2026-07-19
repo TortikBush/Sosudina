@@ -107,26 +107,33 @@ screen account():
                 
          
         vbox:
-            xpos 3200
-            ypos 895
+            xpos 3150
+            ypos 726
             spacing 30
             
             
+
             
         #   дата и время
-            text get_first_launch_date() size 40 color "#aaaaaa"
+            text get_first_launch_date():
+                size 60 
+                color "#0a7a72"
+                font "fronts/candara bold.ttf"
             
             null height 100
 
         vbox:
             xpos 2700
-            ypos 415
+            ypos 405
             spacing 30
             # id
             text persistent.account_id:
-                size 40
+                size 60
+                font "fronts/candara bold.ttf"
                 # color"#ffd700"
-                color "#aaaaaa"
+                
+                color "#0a7a72"
+
 
             
             
@@ -229,8 +236,55 @@ screen account():
                     yoffset 150
 
                     text_size 50
-
+                    
                     action SetVariable("name_edit_account", True)
+
+        vbox:
+            xpos 2480
+            ypos 1045
+            spacing 20
+          
+            
+            
+            # Кнопки с цветами и размерами
+            hbox:
+                xalign 0.5
+                spacing 50
+                
+                # Ламия (красная)
+                button:
+                    xsize 250
+                    ysize 300
+                    xoffset -80 
+                    background None
+                    hover_background None
+                    action Show("in_development", character_name="Ламия")
+              
+                # Пифон (фиолетовая)
+                button:
+                    xsize 250
+                    ysize 300
+                    xoffset -30
+                    background None
+                    hover_background None
+                    action Show("in_development", character_name="Пифон", origin="account")
+
+                    
+               
+                
+                # Ехидна (зелёная)
+                button:
+                    xsize 250
+                    ysize 300
+                    background None
+                    hover_background None
+                    action Show("in_development", character_name="Ехидна")
+                    
+                    
+            
+            null height 30
+            
+          
    
 
         textbutton "Выйти из аккаунта":

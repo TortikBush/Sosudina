@@ -1,8 +1,10 @@
-# game/screens/characters/character_select.rpy
-
+###################################################################
+# Экран выбора персонажа
+###################################################################
 screen character_select():
-    modal True
 
+    modal True
+   
     add "images/Bg_choise.png"
     
     $ hovered_character = GetHoveredCharacter()
@@ -19,7 +21,6 @@ screen character_select():
                 xalign 0.5
                 spacing 200
                 
-                # Ламия
                 vbox:
                     spacing 20
                     imagebutton:
@@ -37,7 +38,6 @@ screen character_select():
                             add Solid("#ff8585", xsize=400, ysize=5):
                                 xalign 0.5
                 
-                # Пифон
                 vbox:
                     spacing 20
                     imagebutton:
@@ -55,7 +55,6 @@ screen character_select():
                             add Solid("#a974ff", xsize=400, ysize=5):
                                 xalign 0.5
                 
-                # Ехидна
                 vbox:
                     spacing 20
                     imagebutton:
@@ -73,7 +72,9 @@ screen character_select():
                             add Solid("#9dfca2", xsize=400, ysize=5):
                                 xalign 0.5
 
-screen in_development(character_name):
+
+
+screen in_development(character_name, origin="default"):
     modal True
     
     frame:
@@ -86,10 +87,13 @@ screen in_development(character_name):
             yalign 0.3
             spacing 50
             xminimum 800
-            
-            text "Персонаж в разработке" size 85 color "#ff4f4f" xalign 0.5
-            text "Нажмите чтобы закрыть" size 30 color "#CCCCCC" xalign 0.5
-    
+
+            if origin == "account" and character_name == "Пифон":
+                text "Пифон" size 85 color "#a974ff" xalign 0.5
+                text "Это ваш подопечный: за ним всегда смотреть, любить и никогда не бросать" size 40 color "#ffd700" xalign 0.5
+            else:
+                text "Персонаж в разработке" size 85 color "#ff4f4f" xalign 0.5
+                text "Нажмите чтобы закрыть" size 30 color "#CCCCCC" xalign 0.5
     key "dismiss" action Hide("in_development")
     key "mouseup_1" action Hide("in_development")
 
